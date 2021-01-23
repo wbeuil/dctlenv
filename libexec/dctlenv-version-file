@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+echo "$DCTLENV_ROOT/version"

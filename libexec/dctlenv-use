@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+[ "$#" -gt 1 ] && log_error "Need 1 version instead of $#" 'usage: dctlenv use [<version>]'
+
+[ -d "$DCTLENV_ROOT/versions" ] || log_error 'No versions of driftctl installed. Please install one with: dctlenv install [<version>]'
+
+version_requested="${1:-""}"
+[ -n "$version_requested" ] || log_error 'Version is not specified' 'usage: dctlenv use [<version>]'
+
+log_debug "Searching $DCTLENV_ROOT/versions for version matching $version_requested"
+version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
+  | tail -n +2 \
+  | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 \
+  | grep -e "$version_requested" \
+  | head -n 1
+)"
+
+[ -n "$version" ] \
+  && log_debug "Found version: $version" \
+  || log_error "No installed versions of driftctl matched '$1'"
+
+target_path="$DCTLENV_ROOT/versions/$version"
+[ -f "$target_path/driftctl" ] \
+  || log_error "Version directory for $version is present, but the driftctl binary is not! Manual intervention required"
+[ -x "$target_path/driftctl" ] \
+  || log_error "Version directory for $version is present, but the driftctl binary is not executable! Manual intervention required"
+
+echo "Switching version to v$version"
+version_file="$(dctlenv-version-file)"
+
+log_debug "Writing \"$version\" to \"$version_file\""
+echo "$version" > "$version_file" || log_error "Failed to switch to v$version"
+
+driftctl version 1>/dev/null || log_error "'driftctl version' failed, something is wrong"
+
+echo "Switching completed"

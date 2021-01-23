@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+panic() {
+  echo "panic: $*" >&2
+  exit 1
+}
+
+if [ -z "${DCTLENV_ROOT:-""}" ]; then
+  # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
+  readlink_f() {
+    local target_file="$1"
+    local file_name
+
+    while [ "$target_file" != "" ]; do
+      cd "$(dirname $target_file)"
+      file_name="$(basename "$target_file")"
+      target_file="$(readlink "$file_name")"
+    done
+
+    echo "$(pwd -P)/$file_name"
+  }
+
+  DCTLENV_ROOT="$(cd "$(dirname "$(readlink_f "$0")")/.." && pwd)"
+  [ -n $DCTLENV_ROOT ] || panic "Failed to set DCTLENV_ROOT"
+else
+  DCTLENV_ROOT="${DCTLENV_ROOT%/}"
+fi
+export DCTLENV_ROOT
+
+if source "$DCTLENV_ROOT/lib/utils.sh"; then
+  log_debug "Utils from $DCTLENV_ROOT/lib/utils.sh sourced successfully"
+else
+  panic "Failed to source utils from $DCTLENV_ROOT/lib/utils.sh"
+fi
+
+for dir in libexec bin; do
+  case ":$PATH:" in
+    *:$DCTLENV_ROOT/$dir:*)
+      log_debug "\$PATH already contains '$DCTLENV_ROOT/$dir'"
+      ;;
+    *)
+      log_debug "Adding '$DCTLENV_ROOT/$dir' to \$PATH"
+      export PATH="$DCTLENV_ROOT/$dir:$PATH"
+      ;;
+  esac
+done
+
+driftctl_path="$DCTLENV_ROOT/bin/driftctl"
+
+exec dctlenv-exec "$@" || log_error "Failed to exec: \"$driftctl_path\" \"$@\""

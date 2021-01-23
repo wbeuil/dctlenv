@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+[ -d "$DCTLENV_ROOT/versions" ] || log_error 'No versions of driftctl installed. Please install one with: dctlenv install [<version>]'
+
+[[ -x "$DCTLENV_ROOT/versions" && -r "$DCTLENV_ROOT/versions" ]] \
+  || log_error "dctlenv versions directory is inaccessible: $DCTLENV_ROOT/versions"
+
+version_file="$(dctlenv-version-file)" \
+  && log_debug "dctlenv-version-file reported: $version_file" \
+  || log_error "dctlenv-version-file failed"
+
+version_name="$(dctlenv-version-name)" \
+  && log_debug "dctlenv-version-name reported: $version_name" \
+  || log_error "dctlenv-version-name failed"
+
+log_debug 'Listing versions...'
+local_versions=($(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
+  | tail -n +2 \
+  | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3))
+
+log_debug "Local versions: ${local_versions[@]}"
+
+log_debug 'Printing versions...'
+for local_version in ${local_versions[@]}; do
+  if [ "$local_version" == "$version_name" ]; then
+    echo "* $local_version (set by $version_file)"
+  else
+    echo "  $local_version"
+  fi
+done
+

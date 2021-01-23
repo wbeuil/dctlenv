@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+log_debug 'Getting version from dctlenv-version-name'
+
+DCTLENV_VERSION="$(dctlenv-version-name 2>/dev/null)" \
+  && log 'debug' "DCTLENV_VERSION is $DCTLENV_VERSION" \
+  || log_error 'Failed to get version from dctlenv-version-name'
+
+if [ ! -d "$DCTLENV_ROOT/versions/$DCTLENV_VERSION" ]; then
+  log_error "Version '$DCTLENV_VERSION' was requested, but not installed"
+fi
+
+DRIFTCTL_BIN_PATH="$DCTLENV_ROOT/versions/$DCTLENV_VERSION/driftctl"
+log_debug "Adding '$DRIFTCTL_BIN_PATH' to \$PATH"
+export PATH="$DRIFTCTL_BIN_PATH:$PATH"
+
+log_debug "Executing: \"$DRIFTCTL_BIN_PATH\" \"$@\""
+exec "$DRIFTCTL_BIN_PATH" "$@" || log_error "Failed to exec: \"$DRIFTCTL_BIN_PATH\" \"$*\""

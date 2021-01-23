@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+[ -d "$DCTLENV_ROOT/versions" ] || log_error 'No versions of driftctl installed. Please install one with: dctlenv install [<version>]'
+
+DCTLENV_VERSION_FILE="$(dctlenv-version-file)" \
+  && log_debug "DCTLENV_VERSION_FILE retrieved: $DCTLENV_VERSION_FILE" \
+  || log_error 'Failed to retrieve DCTLENV_VERSION_FILE'
+
+DCTLENV_VERSION="$(cat "$DCTLENV_VERSION_FILE" 2>/dev/null)" \
+  && log_debug "DCTLENV_VERSION specified in DCTLENV_VERSION_FILE: $DCTLENV_VERSION" \
+  || log_error "Version could not be resolved (set by $DCTLENV_VERSION_FILE or dctlenv use <version>)"
+
+if [ ! -d "$DCTLENV_ROOT/versions/$DCTLENV_VERSION" ]; then
+  log_error "Version '$DCTLENV_VERSION' is not installed (set by $DCTLENV_VERSION_FILE)"
+fi
+
+echo $DCTLENV_VERSION

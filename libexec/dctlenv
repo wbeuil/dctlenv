@@ -16,7 +16,7 @@ abort() {
 
 command="${1:-""}"
 
-log_info "CLI command args: \"$command\""
+log_info "CLI command args: $*"
 
 case "$command" in
   "")
