@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+abort() {
+  {
+    if [ "$#" -eq 0 ]; then
+      cat -
+    else
+      echo "dctlenv: $*"
+      echo ""
+    fi
+  } >&2
+  dctlenv-help
+  exit 1
+}
+
+command="${1:-""}"
+
+log_info "CLI command args: \"$command\""
+
+case "$command" in
+  "")
+    {
+      dctlenv-version
+      echo ""
+      dctlenv-help
+    }
+    exit 0
+    ;;
+  -v | --version)
+    exec dctlenv-version
+    ;;
+  -h | --help)
+    exec dctlenv-help
+    ;;
+  *)
+    command_path="$(command -v "dctlenv-$command" || true)"
+    if [ -z "$command_path" ]; then
+      abort "unknown command \"$command\""
+    fi
+    shift 1
+    exec "$command_path" "$@"
+    ;;
+esac
