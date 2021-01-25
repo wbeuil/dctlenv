@@ -10,7 +10,7 @@ This will get you going with the latest version of dctlenv and make it easy to f
 
 **1. Check out dctlenv where you want**
 
-```shell
+```console
 $ git clone https://github.com/wbeuil/dctlenv ~/.dctlenv
 ```
 
@@ -18,19 +18,19 @@ $ git clone https://github.com/wbeuil/dctlenv ~/.dctlenv
 
 - For **Bash**:
 
-```shell
+```console
 $ echo 'export PATH="$HOME/.dctlenv/bin:$PATH"' >> ~/.bash_profile
 ```
 
 - For **Zsh**:
 
-```shell
+```console
 $ echo 'export PATH="$HOME/.dctlenv/bin:$PATH"' >> ~/.zshrc
 ```
 
 - For **Fish**:
 
-```shell
+```console
 $ set -Ux fish_user_paths $HOME/.dctlenv/bin $fish_user_paths
 ```
 
@@ -40,7 +40,7 @@ $ set -Ux fish_user_paths $HOME/.dctlenv/bin $fish_user_paths
 
 If you've installed dctlenv using the instructions above, you can upgrade to the latest version by pulling from GitHub.
 
-```shell
+```console
 $ cd ~/.dctlenv
 $ git pull
 ```
@@ -51,7 +51,7 @@ $ git pull
 
 Install a specific version of driftctl.
 
-```shell
+```console
 $ dctlenv install 0.2.3
 Installing driftctl v0.2.3
 Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.2.3/driftctl_darwin_amd64
@@ -64,7 +64,7 @@ Installation of driftctl v0.2.3 successful. To make this your default version, r
 
 Switch a version to use.
 
-```shell
+```console
 $ dctlenv use 0.2.3
 Switching version to v0.2.3
 Switching completed
@@ -74,7 +74,7 @@ Switching completed
 
 List installed versions.
 
-```shell
+```console
 $ dctlenv list
 * 0.2.3 (set by /home/wbeuil/.dctlenv/version)
   0.2.2
@@ -84,7 +84,7 @@ $ dctlenv list
 
 List all installable versions.
 
-```shell
+```console
 $ dctlenv list-remote
 0.1.0
 0.1.1
@@ -98,7 +98,7 @@ $ dctlenv list-remote
 
 Uninstall a specific version of driftctl.
 
-```shell
+```console
 $ dctlenv uninstall 0.2.3
 Uninstall driftctl v0.2.3
 driftctl v0.2.3 is successfully uninstalled
@@ -108,7 +108,7 @@ driftctl v0.2.3 is successfully uninstalled
 
 Display the root directory where dctlenv is.
 
-```shell
+```console
 $ dctlenv root
 /home/wbeuil/.dctlenv
 ```
@@ -117,7 +117,7 @@ $ dctlenv root
 
 Display dctlenv version.
 
-```shell
+```console
 $ dctlenv version
 dctlenv 0.0.2-1-gabff053
 ```
@@ -126,7 +126,7 @@ dctlenv 0.0.2-1-gabff053
 
 Display dctlenv help and usage contents.
 
-```shell
+```console
 $ dctlenv help
 Usage: dctlenv <command> [<options>]
 
@@ -152,6 +152,6 @@ You will need to first remove the line from your shell startup configuration fil
 
 Then, you just need to remove its root directory:
 
-```shell
+```console
 $ rm -rf `dctlenv root`
 ```
