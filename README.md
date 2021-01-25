@@ -94,6 +94,16 @@ $ dctlenv list-remote
 0.2.3
 ```
 
+### `dctlenv uninstall [<version>]`
+
+Uninstall a specific version of driftctl.
+
+```shell
+$ dctlenv uninstall 0.2.3
+Uninstall driftctl v0.2.3
+driftctl v0.2.3 is successfully uninstalled
+```
+
 ### `dctlenv root`
 
 Display the root directory where dctlenv is.
