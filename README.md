@@ -155,3 +155,52 @@ Then, you just need to remove its root directory:
 ```console
 $ rm -rf `dctlenv root`
 ```
+
+## Completion scripts
+
+Completion scripts are available to use inside the `completions` folder.
+
+### Bash
+
+```console
+# Linux:
+$ cp completions/dctlenv.bash > /etc/bash_completion.d/dctlenv
+
+# MacOS:
+$ cp completions/dctlenv.bash > /usr/local/etc/bash_completion.d/dctlenv
+```
+
+Remember to open a new shell to test the functionality.
+
+### Zsh
+
+If shell completion is not already enabled in your environment, you will need to enable it. You can execute the following once:
+
+```console
+$ echo "autoload -U compinit; compinit" >> ~/.zshrc
+```
+
+Then, place the completion script in your completion folder listed in your `fpath` if it already exists. Otherwise, you can create a directory, add it to your `fpath` and copy the file in it:
+
+```console
+$ cp completions/dctlenv.zsh > fpath/completion_folder/_dctlenv
+```
+
+#### Oh-My-Zsh
+
+```console
+$ mkdir -p ~/.oh-my-zsh/completions
+$ cp completions/dctlenv.zsh > ~/.oh-my-zsh/completions/_dctlenv
+```
+
+You will need to start a new shell for this setup to take effect.
+
+### Fish
+
+```console
+$ cp completions/dctlenv.fish > ~/.config/fish/completions/dctlenv.fish
+```
+
+Remember to create the directory if it's not already there `mkdir -p ~/.config/fish/completions/`.
+
+Remember to open a new shell to test the functionality.
