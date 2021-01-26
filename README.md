@@ -164,10 +164,10 @@ Completion scripts are available to use inside the `completions` folder.
 
 ```console
 # Linux:
-$ cp completions/dctlenv.bash > /etc/bash_completion.d/dctlenv
+$ sudo cp completions/dctlenv.bash /etc/bash_completion.d/dctlenv
 
 # MacOS:
-$ cp completions/dctlenv.bash > /usr/local/etc/bash_completion.d/dctlenv
+$ sudo cp completions/dctlenv.bash /usr/local/etc/bash_completion.d/dctlenv
 ```
 
 Remember to open a new shell to test the functionality.
@@ -190,7 +190,7 @@ $ cp completions/dctlenv.zsh > fpath/completion_folder/_dctlenv
 
 ```console
 $ mkdir -p ~/.oh-my-zsh/completions
-$ cp completions/dctlenv.zsh > ~/.oh-my-zsh/completions/_dctlenv
+$ cp completions/dctlenv.zsh ~/.oh-my-zsh/completions/_dctlenv
 ```
 
 You will need to start a new shell for this setup to take effect.
@@ -198,7 +198,7 @@ You will need to start a new shell for this setup to take effect.
 ### Fish
 
 ```console
-$ cp completions/dctlenv.fish > ~/.config/fish/completions/dctlenv.fish
+$ cp completions/dctlenv.fish ~/.config/fish/completions/dctlenv.fish
 ```
 
 Remember to create the directory if it's not already there `mkdir -p ~/.config/fish/completions/`.
