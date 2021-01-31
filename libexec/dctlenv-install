@@ -35,7 +35,6 @@ case "$(uname -s)" in
 esac
 
 driftctl_url="https://github.com/cloudskiff/driftctl/releases/download"
-tarball_name="driftctl_${version}_$os"
 
 echo "Installing driftctl v$version"
 
