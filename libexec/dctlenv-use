@@ -32,6 +32,6 @@ version_file="$(dctlenv-version-file)"
 log_debug "Writing \"$version\" to \"$version_file\""
 echo "$version" > "$version_file" || log_error "Failed to switch to v$version"
 
-driftctl version 1>/dev/null || log_error "'driftctl version' failed, something is wrong"
+$(driftctl version 1>/dev/null) || log_error "'driftctl version' failed, something is wrong"
 
 echo "Switching completed"

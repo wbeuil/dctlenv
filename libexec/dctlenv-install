@@ -39,9 +39,9 @@ driftctl_url="https://github.com/cloudskiff/driftctl/releases/download"
 echo "Installing driftctl v$version"
 
 echo "Downloading release tarball from $driftctl_url/v$version/driftctl_$os"
-curlw -# -f -L -o "$dst_path/driftctl" --create-dirs "$driftctl_url/v$version/driftctl_$os" || log_error 'Tarball download failed'
+$(curlw -# -f -L -o "$dst_path/driftctl" --create-dirs "$driftctl_url/v$version/driftctl_$os") || log_error 'Tarball download failed'
 
 echo "Making the $dst_path/driftctl binary executable"
-chmod +x "$dst_path/driftctl"
+$(chmod +x "$dst_path/driftctl") || log_error "Fail to make the binary executable"
 
 echo "Installation of driftctl v${version} successful. To make this your default version, run 'dctlenv use ${version}'"
