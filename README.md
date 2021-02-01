@@ -1,4 +1,7 @@
 # dctlenv
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Version manager for [driftctl](https://github.com/cloudskiff/driftctl) inspired by [tfenv](https://github.com/tfutils/tfenv).
 
@@ -214,3 +217,23 @@ You can configure how `dctlenv` operates with the following settings:
 | `DCTLENV_ROOT`  |         | Defines the directory under which dctlenv resides<br> Current value shown by `dctlenv root` |
 | `DCTLENV_ARCH`  | `amd64` | Architecture other than the default amd64 can be specified                                  |
 | `DCTLENV_DEBUG` | `0`     | Outputs debug information                                                                   |
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://wbeuil.com"><img src="https://avatars.githubusercontent.com/u/8110579?v=4?s=100" width="100px;" alt=""/><br /><sub><b>William BEUIL</b></sub></a><br /><a href="#ideas-wbeuil" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/wbeuil/dctlenv/commits?author=wbeuil" title="Code">💻</a> <a href="https://github.com/wbeuil/dctlenv/commits?author=wbeuil" title="Documentation">📖</a> <a href="#maintenance-wbeuil" title="Maintenance">🚧</a> <a href="https://github.com/wbeuil/dctlenv/pulls?q=is%3Apr+reviewed-by%3Awbeuil" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
