@@ -204,3 +204,13 @@ $ cp completions/dctlenv.fish ~/.config/fish/completions/dctlenv.fish
 Remember to create the directory if it's not already there `mkdir -p ~/.config/fish/completions/`.
 
 Remember to open a new shell to test the functionality.
+
+## Environment variables
+
+You can configure how `dctlenv` operates with the following settings:
+
+| name            | default | description                                                                                 |
+| --------------- | ------- | ------------------------------------------------------------------------------------------- |
+| `DCTLENV_ROOT`  |         | Defines the directory under which dctlenv resides<br> Current value shown by `dctlenv root` |
+| `DCTLENV_ARCH`  | `amd64` | Architecture other than the default amd64 can be specified                                  |
+| `DCTLENV_DEBUG` | `0`     | Outputs debug information                                                                   |
