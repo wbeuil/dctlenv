@@ -16,9 +16,13 @@ version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
   | head -n 1
 )"
 
-[ -n "$version" ] \
-  && log_debug "Found version: $version" \
-  || log_error "No installed versions of driftctl matched '$1'"
+if [ -n "$version" ]; then
+  log_debug "Found version: $version"
+else
+  echo "No installed versions of driftctl matched '$1', let's install it"
+  $(dctlenv-install $1 1>/dev/null) || log_error "Installation of version $1 failed"
+  version=$1
+fi
 
 target_path="$DCTLENV_ROOT/versions/$version"
 [ -f "$target_path/driftctl" ] \
