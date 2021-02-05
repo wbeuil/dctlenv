@@ -67,8 +67,12 @@ OUT
 
 @test "dctlenv install [<version>]: prints an error message if it failed to make the binary executable" {
   chmod() { exit 1; }; export -f chmod;
-  curlw() { exit 0; }; export -f curlw;
   uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    exit 0
+  }; export -f curlw;
 
   run dctlenv install 0.3.1
 
@@ -76,15 +80,20 @@ OUT
   assert_output <<OUT
 Installing driftctl v0.3.1
 Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Making the $DCTLENV_ROOT/versions/0.3.1/driftctl binary executable
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+No SHA256 hashes file available. Skipping SHA256 hash validation
 Fail to make the binary executable
 OUT
 }
 
 @test "dctlenv install [<version>]: prints a success message at the end of the install" {
   chmod() { exit 0; }; export -f chmod;
-  curlw() { exit 0; }; export -f curlw;
   uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    exit 0
+  }; export -f curlw;
 
   run dctlenv install 0.3.1
 
@@ -92,7 +101,49 @@ OUT
   assert_output <<OUT
 Installing driftctl v0.3.1
 Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Making the $DCTLENV_ROOT/versions/0.3.1/driftctl binary executable
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+No SHA256 hashes file available. Skipping SHA256 hash validation
+Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
+OUT
+}
+
+@test "dctlenv install [<version>]: prints an error message if it failed to check SHA256" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    echo "test driftctl_linux_amd64" > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS"
+    exit 0
+  }; export -f curlw;
+
+  run dctlenv install 0.3.1
+
+  assert_failure
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash does not match!
+OUT
+}
+
+@test "dctlenv install [<version>]: prints a success message if it can install and check for SHA256" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.3.1"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS")
+    exit 0
+  }; export -f curlw;
+
+  run dctlenv install 0.3.1
+
+  assert_success
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
 }

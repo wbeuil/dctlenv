@@ -39,9 +39,45 @@ driftctl_url="https://github.com/cloudskiff/driftctl/releases/download"
 echo "Installing driftctl v$version"
 
 echo "Downloading release tarball from $driftctl_url/v$version/driftctl_$os"
-$(curlw -# -f -L -o "$dst_path/driftctl" --create-dirs "$driftctl_url/v$version/driftctl_$os") || log_error 'Tarball download failed'
+$(curlw -# -f -L -o "$dst_path/driftctl_$os" --create-dirs "$driftctl_url/v$version/driftctl_$os") || log_error 'Tarball download failed'
 
-echo "Making the $dst_path/driftctl binary executable"
+echo "Downloading SHA256 hashes file from $driftctl_url/v$version/driftctl_SHA256SUMS"
+$(curlw -s -f -L -o "$dst_path/driftctl_SHA256SUMS" "$driftctl_url/v$version/driftctl_SHA256SUMS") || log_debug 'SHA256 hashes download failed'
+
+if [[ -f "$dst_path/driftctl_SHA256SUMS" ]]; then
+  sha256sum_bin="$(command -v sha256sum 2>/dev/null)"
+  if [[ -n "$sha256sum_bin" && -x "$sha256sum_bin" ]]; then
+    (cd "$dst_path"; grep "driftctl_$os" "driftctl_SHA256SUMS" | "$sha256sum_bin" -c) &>/dev/null \
+      && echo "SHA256 hash matched!" \
+      || log_error 'SHA256 hash does not match!'
+  else
+    echo 'No sha256sum tool available. Skipping SHA256 hash validation'
+  fi
+  $(rm "$dst_path/driftctl_SHA256SUMS")
+else
+  echo 'No SHA256 hashes file available. Skipping SHA256 hash validation'
+fi
+
+if [ "${DCTLENV_PGP:-0}" -gt 0 ]; then
+  echo "Downloading SHA256 hashes signature file from $driftctl_url/v$version/driftctl_SHA256SUMS.gpg"
+  $(curlw -s -f -L -o "$dst_path/driftctl_SHA256SUMS.gpg" "$driftctl_url/v$version/driftctl_SHA256SUMS.gpg") || log_debug 'SHA256 hashes signature download failed'
+
+  if [[ -f "$dst_path/driftctl_SHA256SUMS.gpg" ]]; then
+    gpg_bin="$(command -v gpg 2>/dev/null)"
+    if [[ -n "$gpg_bin" && -x "$gpg_bin" ]]; then
+      "$gpg_bin" --verify "$dst_path/driftctl_SHA256SUMS.gpg" \
+      && echo "PGP signature matched!" \
+      || log_error 'PGP signature rejected!'
+    else
+      echo 'No gpg tool available. Skipping signature validation'
+    fi
+    $(rm "$dst_path/driftctl_SHA256SUMS.gpg")
+  else
+    echo 'No SHA256 hashes signature file available. Skipping signature validation'
+  fi
+fi
+
+$(mv "$dst_path/driftctl_$os" "$dst_path/driftctl")
 $(chmod +x "$dst_path/driftctl") || log_error "Fail to make the binary executable"
 
 echo "Installation of driftctl v${version} successful. To make this your default version, run 'dctlenv use ${version}'"
