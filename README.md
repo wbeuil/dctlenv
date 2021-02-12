@@ -59,8 +59,36 @@ $ dctlenv install 0.2.3
 Installing driftctl v0.2.3
 Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.2.3/driftctl_darwin_amd64
 ######################################################################################################################## 100.0%
-Making the /home/wbeuil/.dctlenv/versions/0.2.3/driftctl binary executable
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.2.3/driftctl_SHA256SUMS
+No SHA256 hashes file available. Skipping SHA256 hash validation
 Installation of driftctl v0.2.3 successful. To make this your default version, run 'dctlenv use 0.2.3'
+```
+
+For signed version of driftctl (starting v0.4.0) you can now install and verify digital signature with dctlenv.
+
+You will need first to import the public key of CloudSkiff and then use the environment variable `DCTLENV_PGP`.
+
+```console
+# Import key
+$ gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xACC776A79C824EBD
+gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+# Install and verify signature
+$ DCTLENV_PGP=1 dctlenv install 0.4.0
+Installing driftctl v0.4.0
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_darwin_amd64
+######################################################################################################################## 100.0%
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS
+SHA256 hash matched!
+Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS.gpg
+gpg: Signature made Mon Feb  8 18:59:40 2021 CET
+gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
+gpg:                issuer "security@cloudskiff.com"
+gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
+PGP signature matched!
+Installation of driftctl v0.4.0 successful. To make this your default version, run 'dctlenv use 0.4.0'
 ```
 
 ### `dctlenv use [<version>]`
@@ -217,6 +245,7 @@ You can configure how `dctlenv` operates with the following settings:
 | `DCTLENV_ROOT`  |         | Defines the directory under which dctlenv resides<br> Current value shown by `dctlenv root` |
 | `DCTLENV_ARCH`  | `amd64` | Architecture other than the default amd64 can be specified                                  |
 | `DCTLENV_DEBUG` | `0`     | Outputs debug information                                                                   |
+| `DCTLENV_PGP`   | `0`     | Verify digital signatures                                                                   |
 
 ## Contributors ✨
 
