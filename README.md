@@ -54,6 +54,11 @@ $ git pull
 
 Install a specific version of driftctl.
 
+Available options:
+
+- `x.y.z` to install the exact version of driftctl
+- `latest` to install the latest version of driftctl
+
 ```console
 $ dctlenv install 0.2.3
 Installing driftctl v0.2.3
@@ -94,6 +99,11 @@ Installation of driftctl v0.4.0 successful. To make this your default version, r
 ### `dctlenv use [<version>]`
 
 Switch a version to use.
+
+Available options:
+
+- `x.y.z` to install and use the exact version of driftctl
+- `latest` to install and use the latest version of driftctl
 
 ```console
 $ dctlenv use 0.2.3
