@@ -6,6 +6,18 @@ setup() {
   export DCTLENV_TMPDIR="$BATS_TMPDIR/dctlenv"
   export DCTLENV_TMPDIR="$(mktemp -d "$DCTLENV_TMPDIR.XXX" 2>/dev/null || echo "$DCTLENV_TMPDIR")"
   export DCTLENV_ROOT="$DCTLENV_TMPDIR"
+
+  dctlenv-list-remote() {
+    echo "0.1.0
+0.1.1
+0.2.0
+0.2.1
+0.2.2
+0.2.3
+0.3.0
+0.3.1"
+  }
+  export -f dctlenv-list-remote;
 }
 
 @test "dctlenv use [<version>]: prints an error message if we try to use more than one version" {
@@ -97,6 +109,27 @@ OUT
   assert_output <<OUT
 No installed versions of driftctl matched '0.3.0', let's install it
 Switching version to v0.3.0
+Switching completed
+OUT
+}
+
+@test "dctlenv use [<version>]: prints a success message when using the latest version" {
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.0"
+
+  dctlenv-install() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl"
+    chmod +x $DCTLENV_TMPDIR/versions/0.3.1/driftctl
+    exit 0
+  }; export -f dctlenv-install;
+  driftctl() { exit 0; }; export -f driftctl;
+
+  run dctlenv use latest
+
+  assert_success
+  assert_output <<OUT
+No installed versions of driftctl matched '0.3.1', let's install it
+Switching version to v0.3.1
 Switching completed
 OUT
 }

@@ -148,6 +148,27 @@ Installation of driftctl v0.3.1 successful. To make this your default version, r
 OUT
 }
 
+@test "dctlenv install [<version>]: prints a success message if it can install the latest version" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.3.1"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS")
+    exit 0
+  }; export -f curlw;
+
+  run dctlenv install latest
+
+  assert_success
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash matched!
+Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
+OUT
+}
+
 teardown() {
   rm -rf "$DCTLENV_TMPDIR"
 }

@@ -8,6 +8,10 @@ set -uo pipefail
 version_requested="${1:-""}"
 [ -n "$version_requested" ] || log_error 'Version is not specified' 'usage: dctlenv use [<version>]'
 
+if [[ $version_requested == "latest" ]]; then
+  version_requested="$(dctlenv-list-remote | tail -n 1)"
+fi
+
 log_debug "Searching $DCTLENV_ROOT/versions for version matching $version_requested"
 version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
   | tail -n +2 \
@@ -19,9 +23,9 @@ version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
 if [ -n "$version" ]; then
   log_debug "Found version: $version"
 else
-  echo "No installed versions of driftctl matched '$1', let's install it"
-  $(dctlenv-install $1 1>/dev/null) || log_error "Installation of version $1 failed"
-  version=$1
+  echo "No installed versions of driftctl matched '$version_requested', let's install it"
+  $(dctlenv-install $version_requested 1>/dev/null) || log_error "Installation of version $version_requested failed"
+  version=$version_requested
 fi
 
 target_path="$DCTLENV_ROOT/versions/$version"

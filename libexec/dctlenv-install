@@ -6,7 +6,12 @@ set -uo pipefail
 version_requested="${1:-""}"
 [ -n "$version_requested" ] || log_error 'Version is not specified' 'usage: dctlenv install [<version>]'
 
-version="$(dctlenv-list-remote | grep "$version_requested" | head -n 1)"
+if [[ $version_requested == "latest" ]]; then
+  version="$(dctlenv-list-remote | tail -n 1)"
+else
+  version="$(dctlenv-list-remote | grep "$version_requested" | head -n 1)"
+fi
+
 [ -n "$version" ] || log_error "No version $version_requested found in remote"
 
 dst_path="$DCTLENV_ROOT/versions/$version"
