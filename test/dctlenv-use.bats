@@ -27,13 +27,6 @@ setup() {
   assert_output 'usage: dctlenv use [<version>]'
 }
 
-@test "dctlenv use [<version>]: prints an error message if there is no version installed" {
-  run dctlenv use 0.3.1
-
-  assert_failure
-  assert_output 'No versions of driftctl installed. Please install one with: dctlenv install [<version>]'
-}
-
 @test "dctlenv use [<version>]: prints an error message if we don't specified a version to use" {
   mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
 
@@ -116,6 +109,25 @@ OUT
 @test "dctlenv use [<version>]: prints a success message when using the latest version" {
   mkdir -p "$DCTLENV_TMPDIR/versions/0.3.0"
 
+  dctlenv-install() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl"
+    chmod +x $DCTLENV_TMPDIR/versions/0.3.1/driftctl
+    exit 0
+  }; export -f dctlenv-install;
+  driftctl() { exit 0; }; export -f driftctl;
+
+  run dctlenv use latest
+
+  assert_success
+  assert_output <<OUT
+No installed versions of driftctl matched '0.3.1', let's install it
+Switching version to v0.3.1
+Switching completed
+OUT
+}
+
+@test "dctlenv use [<version>]: can install and use driftctl for a new dctlenv utilisation" {
   dctlenv-install() {
     mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
     touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl"

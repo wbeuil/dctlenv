@@ -3,8 +3,6 @@ set -uo pipefail
 
 [ "$#" -gt 1 ] && log_error "Need 1 version instead of $#" 'usage: dctlenv use [<version>]'
 
-[ -d "$DCTLENV_ROOT/versions" ] || log_error 'No versions of driftctl installed. Please install one with: dctlenv install [<version>]'
-
 version_requested="${1:-""}"
 [ -n "$version_requested" ] || log_error 'Version is not specified' 'usage: dctlenv use [<version>]'
 
@@ -13,7 +11,7 @@ if [[ $version_requested == "latest" ]]; then
 fi
 
 log_debug "Searching $DCTLENV_ROOT/versions for version matching $version_requested"
-version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \
+version="$(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; 2>/dev/null \
   | tail -n +2 \
   | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 \
   | grep -e "$version_requested" \
