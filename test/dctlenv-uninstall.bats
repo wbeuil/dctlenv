@@ -55,6 +55,22 @@ driftctl v0.3.1 is successfully uninstalled
 OUT
 }
 
+@test "dctlenv uninstall [<version>]: prints a success message if it can uninstall v0.3.1" {
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.0"
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.2.3"
+  touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl"
+
+  run dctlenv uninstall v0.3.1
+
+  assert_success
+  assert_output <<OUT
+Uninstall driftctl v0.3.1
+driftctl v0.3.1 is successfully uninstalled
+OUT
+}
+
+
 teardown() {
   rm -rf "$DCTLENV_TMPDIR"
 }

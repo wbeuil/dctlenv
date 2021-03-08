@@ -85,6 +85,22 @@ Switching completed
 OUT
 }
 
+@test "dctlenv use [<version>]: prints a success message when switching versions v0.3.1" {
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+  touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl"
+  chmod +x $DCTLENV_TMPDIR/versions/0.3.1/driftctl
+
+  driftctl() { exit 0; }; export -f driftctl;
+
+  run dctlenv use v0.3.1
+
+  assert_success
+  assert_output <<OUT
+Switching version to v0.3.1
+Switching completed
+OUT
+}
+
 @test "dctlenv use [<version>]: prints a success message if we successfuly install and use a non-installed version" {
   mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
 

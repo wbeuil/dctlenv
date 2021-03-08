@@ -56,7 +56,7 @@ Install a specific version of driftctl.
 
 Available options:
 
-- `x.y.z` to install the exact version of driftctl
+- `(v)x.y.z` to install the exact version of driftctl
 - `latest` to install the latest version of driftctl
 
 ```console
@@ -102,12 +102,16 @@ Switch a version to use.
 
 Available options:
 
-- `x.y.z` to install and use the exact version of driftctl
+- `(v)x.y.z` to install and use the exact version of driftctl
 - `latest` to install and use the latest version of driftctl
 
 ```console
 $ dctlenv use 0.2.3
 Switching version to v0.2.3
+Switching completed
+
+$ dctlenv use v0.6.0
+Switching version to v0.6.0
 Switching completed
 ```
 
@@ -139,10 +143,18 @@ $ dctlenv list-remote
 
 Uninstall a specific version of driftctl.
 
+Available options:
+
+- `(v)x.y.z` to uninstall the exact version of driftctl
+
 ```console
 $ dctlenv uninstall 0.2.3
 Uninstall driftctl v0.2.3
 driftctl v0.2.3 is successfully uninstalled
+
+$ dctlenv uninstall v0.6.0
+Uninstall driftctl v0.6.0
+driftctl v0.6.0 is successfully uninstalled
 ```
 
 ### `dctlenv root`
