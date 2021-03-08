@@ -14,7 +14,11 @@ This will get you going with the latest version of dctlenv and make it easy to f
 **1. Check out dctlenv where you want**
 
 ```console
+# Install latest version
 $ git clone https://github.com/wbeuil/dctlenv ~/.dctlenv
+
+# Install a specific version (e.g. v0.1.2)
+$ git clone --depth 1 --branch v0.1.2 https://github.com/wbeuil/dctlenv ~/.dctlenv
 ```
 
 **2. Add `~/.dctlenv/bin` to your `$PATH` for access to the dctlenv CLI**
