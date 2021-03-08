@@ -26,6 +26,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "eliecharra",
+      "name": "Elie",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6154987?v=4",
+      "profile": "https://www.elie.ski",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
