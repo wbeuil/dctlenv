@@ -284,6 +284,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://wbeuil.com"><img src="https://avatars.githubusercontent.com/u/8110579?v=4?s=100" width="100px;" alt=""/><br /><sub><b>William BEUIL</b></sub></a><br /><a href="#ideas-wbeuil" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/wbeuil/dctlenv/commits?author=wbeuil" title="Code">💻</a> <a href="https://github.com/wbeuil/dctlenv/commits?author=wbeuil" title="Documentation">📖</a> <a href="#maintenance-wbeuil" title="Maintenance">🚧</a> <a href="https://github.com/wbeuil/dctlenv/pulls?q=is%3Apr+reviewed-by%3Awbeuil" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/sjourdan"><img src="https://avatars.githubusercontent.com/u/419121?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stephane Jourdan</b></sub></a><br /><a href="https://github.com/wbeuil/dctlenv/commits?author=sjourdan" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://www.elie.ski"><img src="https://avatars.githubusercontent.com/u/6154987?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Elie</b></sub></a><br /><a href="https://github.com/wbeuil/dctlenv/commits?author=eliecharra" title="Documentation">📖</a></td>
   </tr>
 </table>
 
