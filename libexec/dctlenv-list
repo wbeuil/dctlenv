@@ -7,12 +7,10 @@ set -uo pipefail
   || log_error "dctlenv versions directory is inaccessible: $DCTLENV_ROOT/versions"
 
 version_file="$(dctlenv-version-file)" \
-  && log_debug "dctlenv-version-file reported: $version_file" \
-  || log_error "dctlenv-version-file failed"
+  && log_debug "dctlenv-version-file reported: $version_file"
 
-version_name="$(dctlenv-version-name)" \
-  && log_debug "dctlenv-version-name reported: $version_name" \
-  || log_error "dctlenv-version-name failed"
+version_name="$(dctlenv-version-name 2>/dev/null)" \
+  && log_debug "dctlenv-version-name reported: $version_name"
 
 log_debug 'Listing versions...'
 local_versions=($(\find "$DCTLENV_ROOT/versions" -type d -exec basename {} \; \

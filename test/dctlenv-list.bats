@@ -33,6 +33,23 @@ setup() {
 OUT
 }
 
+@test "dctlenv list: prints all installed versions without a used version" {
+  curlw() { echo "$(cat ./test/mocks/list-remote.json)"; }; export -f curlw;
+
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.3.0"
+  mkdir -p "$DCTLENV_TMPDIR/versions/0.2.3"
+
+  run dctlenv list
+
+  assert_success
+  assert_output <<OUT
+  0.3.1
+  0.3.0
+  0.2.3
+OUT
+}
+
 teardown() {
   rm -rf "$DCTLENV_TMPDIR"
 }
