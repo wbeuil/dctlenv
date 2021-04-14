@@ -41,12 +41,24 @@ case "$(uname -s)" in
     ;;
 esac
 
+case "${DCTLENV_CURL:-0}" in
+  0)
+    curl="-#"
+    ;;
+  1)
+    curl="-s"
+    ;;
+  *)
+    log_error 'You can only set DCTLENV_CURL to 0 or 1'
+    ;;
+esac
+
 driftctl_url="https://github.com/cloudskiff/driftctl/releases/download"
 
 echo "Installing driftctl v$version"
 
 echo "Downloading release tarball from $driftctl_url/v$version/driftctl_$os"
-$(curlw -# -f -L -o "$dst_path/driftctl_$os" --create-dirs "$driftctl_url/v$version/driftctl_$os") || log_error 'Tarball download failed'
+$(curlw "$curl" -f -L -o "$dst_path/driftctl_$os" --create-dirs "$driftctl_url/v$version/driftctl_$os") || log_error 'Tarball download failed'
 
 echo "Downloading SHA256 hashes file from $driftctl_url/v$version/driftctl_SHA256SUMS"
 $(curlw -s -f -L -o "$dst_path/driftctl_SHA256SUMS" "$driftctl_url/v$version/driftctl_SHA256SUMS") || log_debug 'SHA256 hashes download failed'

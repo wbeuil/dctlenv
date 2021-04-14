@@ -272,6 +272,7 @@ You can configure how `dctlenv` operates with the following settings:
 | `DCTLENV_ARCH`  | `amd64` | Architecture other than the default amd64 can be specified                                  |
 | `DCTLENV_DEBUG` | `0`     | Outputs debug information                                                                   |
 | `DCTLENV_PGP`   | `0`     | Verify digital signatures                                                                   |
+| `DCTLENV_CURL`  | `0`     | Curl download progress bar, 0 will run a -# curl and 1 will run a -s curl                   |
 
 ## Contributors ✨
 
