@@ -5,5 +5,5 @@ driftctl_url=https://api.github.com/repos/cloudskiff/driftctl/tags\?page\=1\&per
 
 remote_versions="$(curlw -sSf $driftctl_url)" || log_error "Failed to download remote versions from GitHub"
 
-echo $remote_versions | grep -o '"name": "v[^"]*"' | cut -d '"' -f 4 | cut -c 2- | sort
+echo $remote_versions | grep -o '"name": "v[^"]*"' | cut -d '"' -f 4 | cut -c 2- | sort -V
 

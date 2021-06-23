@@ -1,5 +1,35 @@
 [
   {
+    "name": "v1.0.0",
+    "zipball_url": "https://api.github.com/repos/cloudskiff/driftctl/zipball/v1.0.0",
+    "tarball_url": "https://api.github.com/repos/cloudskiff/driftctl/tarball/v1.0.0",
+    "commit": {
+      "sha": "cdea16b5dbca1c6205068d74b092b3e5284cabbd",
+      "url": "https://api.github.com/repos/cloudskiff/driftctl/commits/cdea16b5dbca1c6205068d74b092b3e5284cabbd"
+    },
+    "node_id": "MDM6UmVmMjk3NjIyOTQ1OnJlZnMvdGFncy92MC4zLjE="
+  },
+  {
+    "name": "v0.11.0",
+    "zipball_url": "https://api.github.com/repos/cloudskiff/driftctl/zipball/v0.11.0",
+    "tarball_url": "https://api.github.com/repos/cloudskiff/driftctl/tarball/v0.11.0",
+    "commit": {
+      "sha": "cdea16b5dbca1c6205068d74b092b3e5284cabbd",
+      "url": "https://api.github.com/repos/cloudskiff/driftctl/commits/cdea16b5dbca1c6205068d74b092b3e5284cabbd"
+    },
+    "node_id": "MDM6UmVmMjk3NjIyOTQ1OnJlZnMvdGFncy92MC4zLjE="
+  },
+  {
+    "name": "v0.10.0",
+    "zipball_url": "https://api.github.com/repos/cloudskiff/driftctl/zipball/v0.10.0",
+    "tarball_url": "https://api.github.com/repos/cloudskiff/driftctl/tarball/v0.10.0",
+    "commit": {
+      "sha": "cdea16b5dbca1c6205068d74b092b3e5284cabbd",
+      "url": "https://api.github.com/repos/cloudskiff/driftctl/commits/cdea16b5dbca1c6205068d74b092b3e5284cabbd"
+    },
+    "node_id": "MDM6UmVmMjk3NjIyOTQ1OnJlZnMvdGFncy92MC4zLjE="
+  },
+  {
     "name": "v0.3.1",
     "zipball_url": "https://api.github.com/repos/cloudskiff/driftctl/zipball/v0.3.1",
     "tarball_url": "https://api.github.com/repos/cloudskiff/driftctl/tarball/v0.3.1",
