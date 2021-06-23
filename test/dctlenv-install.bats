@@ -6,6 +6,7 @@ setup() {
   export DCTLENV_TMPDIR="$BATS_TMPDIR/dctlenv"
   export DCTLENV_TMPDIR="$(mktemp -d "$DCTLENV_TMPDIR.XXX" 2>/dev/null || echo "$DCTLENV_TMPDIR")"
   export DCTLENV_ROOT="$DCTLENV_TMPDIR"
+  export DCTLENV_PGP=0
 
   dctlenv-list-remote() {
     echo "0.1.0
@@ -84,6 +85,7 @@ Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/relea
 No SHA256 hashes file available. Skipping SHA256 hash validation
 Fail to make the binary executable
 OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints a success message at the end of the install" {
@@ -105,6 +107,7 @@ Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/relea
 No SHA256 hashes file available. Skipping SHA256 hash validation
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints an error message if it failed to check SHA256" {
@@ -125,6 +128,7 @@ Downloading release tarball from https://github.com/cloudskiff/driftctl/releases
 Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash does not match!
 OUT
+  assert [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints a success message if it can install and check for SHA256" {
@@ -146,6 +150,7 @@ Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/relea
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints a success message if it can install v0.3.1" {
@@ -167,6 +172,7 @@ Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/relea
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints a success message if it can install the latest version" {
@@ -188,6 +194,85 @@ Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/relea
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
+}
+
+@test "dctlenv install [<version>]: prints a missing hashes signature file" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.3.1"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS")
+    exit 0
+  }; export -f curlw;
+
+  DCTLENV_PGP=1 run dctlenv install 0.3.1
+
+  assert_success
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash matched!
+Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+No SHA256 hashes signature file available. Skipping signature validation
+Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
+OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS.gpg" ]
+}
+
+@test "dctlenv install [<version>]: prints an error message if the PGP signature check fails" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.3.1"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS")
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS.gpg"
+    exit 0
+  }; export -f curlw;
+  gpg() { exit 1; }; export -f gpg;
+
+  DCTLENV_PGP=1 run dctlenv install 0.3.1
+
+  assert_failure
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash matched!
+Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+PGP signature rejected!
+OUT
+  assert [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
+  assert [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS.gpg" ]
+}
+
+@test "dctlenv install [<version>]: prints a success message if the PGP signature check matches" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.3.1"
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.3.1"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS")
+    touch "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS.gpg"
+    exit 0
+  }; export -f curlw;
+  gpg() { exit 0; }; export -f gpg;
+
+  DCTLENV_PGP=1 run dctlenv install 0.3.1
+
+  assert_success
+  assert_output <<OUT
+Installing driftctl v0.3.1
+Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+SHA256 hash matched!
+Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+PGP signature matched!
+Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
+OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS.gpg" ]
 }
 
 teardown() {
