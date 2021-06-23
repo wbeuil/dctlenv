@@ -79,7 +79,7 @@ You will need first to import the public key of CloudSkiff and then use the envi
 
 ```console
 # Import key
-$ gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xACC776A79C824EBD
+$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 0xACC776A79C824EBD
 gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
 gpg: Total number processed: 1
 gpg:               imported: 1
