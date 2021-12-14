@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wbeuil/dctlenv/Test%20Workflow)
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg)](#contributors-)
 
-Version manager for [driftctl](https://github.com/cloudskiff/driftctl) inspired by [tfenv](https://github.com/tfutils/tfenv).
+Version manager for [driftctl](https://github.com/snyk/driftctl) inspired by [tfenv](https://github.com/tfutils/tfenv).
 
 ## Installation
 
@@ -66,9 +66,9 @@ Available options:
 ```console
 $ dctlenv install 0.2.3
 Installing driftctl v0.2.3
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.2.3/driftctl_darwin_amd64
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.2.3/driftctl_darwin_amd64
 ######################################################################################################################## 100.0%
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.2.3/driftctl_SHA256SUMS
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.2.3/driftctl_SHA256SUMS
 No SHA256 hashes file available. Skipping SHA256 hash validation
 Installation of driftctl v0.2.3 successful. To make this your default version, run 'dctlenv use 0.2.3'
 ```
@@ -87,15 +87,11 @@ gpg:               imported: 1
 # Install and verify signature
 $ DCTLENV_PGP=1 dctlenv install 0.4.0
 Installing driftctl v0.4.0
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_darwin_amd64
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_darwin_amd64
 ######################################################################################################################## 100.0%
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS.gpg
-gpg: Signature made Mon Feb  8 18:59:40 2021 CET
-gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
-gpg:                issuer "security@cloudskiff.com"
-gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS.gpg
 PGP signature matched!
 Installation of driftctl v0.4.0 successful. To make this your default version, run 'dctlenv use 0.4.0'
 ```

@@ -61,7 +61,7 @@ setup() {
   assert_failure
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
 Tarball download failed
 OUT
 }
@@ -80,8 +80,8 @@ OUT
   assert_failure
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 No SHA256 hashes file available. Skipping SHA256 hash validation
 Fail to make the binary executable
 OUT
@@ -102,8 +102,8 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 No SHA256 hashes file available. Skipping SHA256 hash validation
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
@@ -124,8 +124,8 @@ OUT
   assert_failure
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash does not match!
 OUT
   assert [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
@@ -145,8 +145,8 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
@@ -167,8 +167,8 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
@@ -189,8 +189,8 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
@@ -211,10 +211,10 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
 No SHA256 hashes signature file available. Skipping signature validation
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT
@@ -238,10 +238,10 @@ OUT
   assert_failure
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
 PGP signature rejected!
 OUT
   assert [ -e "$DCTLENV_TMPDIR/versions/0.3.1/driftctl_SHA256SUMS" ]
@@ -264,10 +264,10 @@ OUT
   assert_success
   assert_output <<OUT
 Installing driftctl v0.3.1
-Downloading release tarball from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/cloudskiff/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.3.1/driftctl_SHA256SUMS.gpg
 PGP signature matched!
 Installation of driftctl v0.3.1 successful. To make this your default version, run 'dctlenv use 0.3.1'
 OUT

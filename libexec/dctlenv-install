@@ -53,7 +53,7 @@ case "${DCTLENV_CURL:-0}" in
     ;;
 esac
 
-driftctl_url="https://github.com/cloudskiff/driftctl/releases/download"
+driftctl_url="https://github.com/snyk/driftctl/releases/download"
 
 echo "Installing driftctl v$version"
 
