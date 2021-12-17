@@ -15,3 +15,9 @@ curlw() {
   curl $TLS_OPT "$@"
 }
 export -f curlw
+
+# Check if one version is lower or equal to another version
+version_le() {
+  [ "$1" = "`echo -e "$1\n$2" | sort -V | head -n 1`" ]
+}
+export -f version_le
