@@ -5,7 +5,7 @@ log_debug 'Getting version from dctlenv-version-name'
 
 DCTLENV_VERSION="$(dctlenv-version-name 2>/dev/null)" \
   && log 'debug' "DCTLENV_VERSION is $DCTLENV_VERSION" \
-  || log_error 'Failed to get version from dctlenv-version-name'
+  || log_error 'Failed to get version from dctlenv-version-name. Did you run dctlenv use <version> ?'
 
 if [ ! -d "$DCTLENV_ROOT/versions/$DCTLENV_VERSION" ]; then
   log_error "Version '$DCTLENV_VERSION' was requested, but not installed"
