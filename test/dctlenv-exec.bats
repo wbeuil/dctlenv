@@ -12,7 +12,7 @@ setup() {
   run dctlenv exec
 
   assert_failure
-  assert_output 'Failed to get version from dctlenv-version-name'
+  assert_output 'Failed to get version from dctlenv-version-name. Did you run dctlenv use <version> ?'
 }
 
 @test "dctlenv exec: prints error messages if it fails to execute" {
