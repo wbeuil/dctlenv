@@ -73,9 +73,9 @@ No SHA256 hashes file available. Skipping SHA256 hash validation
 Installation of driftctl v0.2.3 successful. To make this your default version, run 'dctlenv use 0.2.3'
 ```
 
-For signed version of driftctl (starting v0.4.0) you can now install and verify digital signature with dctlenv.
+For signed version of driftctl (starting v0.10.0) you can now install and verify digital signature with dctlenv.
 
-You will need first to import the public key of CloudSkiff and then use the environment variable `DCTLENV_PGP`.
+You just need to import the public key of CloudSkiff and have the gpg binary already installed.
 
 ```console
 # Import key
@@ -85,15 +85,15 @@ gpg: Total number processed: 1
 gpg:               imported: 1
 
 # Install and verify signature
-$ DCTLENV_PGP=1 dctlenv install 0.4.0
-Installing driftctl v0.4.0
-Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_darwin_amd64
+$ dctlenv install 0.10.0
+Installing driftctl v0.10.0
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_darwin_amd64
 ######################################################################################################################## 100.0%
-Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.4.0/driftctl_SHA256SUMS.gpg
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS.gpg
 PGP signature matched!
-Installation of driftctl v0.4.0 successful. To make this your default version, run 'dctlenv use 0.4.0'
+Installation of driftctl v0.10.0 successful. To make this your default version, run 'dctlenv use 0.10.0'
 ```
 
 ### `dctlenv use [<version>]`
@@ -267,7 +267,6 @@ You can configure how `dctlenv` operates with the following settings:
 | `DCTLENV_ROOT`  |         | Defines the directory under which dctlenv resides<br> Current value shown by `dctlenv root` |
 | `DCTLENV_ARCH`  | `amd64` | Architecture other than the default amd64 can be specified                                  |
 | `DCTLENV_DEBUG` | `0`     | Outputs debug information                                                                   |
-| `DCTLENV_PGP`   | `0`     | Verify digital signatures                                                                   |
 | `DCTLENV_CURL`  | `0`     | Curl download progress bar, 0 will run a -# curl and 1 will run a -s curl                   |
 
 ## Contributors ✨

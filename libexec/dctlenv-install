@@ -53,6 +53,14 @@ case "${DCTLENV_CURL:-0}" in
     ;;
 esac
 
+# By default we enable the PGP verification unless the
+# version is below or equal to 0.9.1
+pgp=1
+if version_le $version "0.9.1"; then
+  pgp=0
+fi
+
+driftctl_key="0xACC776A79C824EBD"
 driftctl_url="https://github.com/snyk/driftctl/releases/download"
 
 echo "Installing driftctl v$version"
@@ -72,31 +80,40 @@ if [[ -f "$dst_path/driftctl_SHA256SUMS" ]]; then
   else
     echo 'No sha256sum tool available. Skipping SHA256 hash validation'
   fi
-  if [ "${DCTLENV_PGP:-0}" -eq 0 ]; then
+  if [ $pgp -eq 0 ]; then
     $(rm "$dst_path/driftctl_SHA256SUMS")
   fi
 else
   echo 'No SHA256 hashes file available. Skipping SHA256 hash validation'
 fi
 
-if [ "${DCTLENV_PGP:-0}" -gt 0 ]; then
-  echo "Downloading SHA256 hashes signature file from $driftctl_url/v$version/driftctl_SHA256SUMS.gpg"
-  $(curlw -s -f -L -o "$dst_path/driftctl_SHA256SUMS.gpg" "$driftctl_url/v$version/driftctl_SHA256SUMS.gpg") || log_debug 'SHA256 hashes signature download failed'
+bin_is_verified=0
+if [ $pgp -eq 1 ]; then
+  gpg_bin="$(command -v gpg 2>/dev/null)"
+  if [[ -n "$gpg_bin" ]]; then
+    # Check if we have the key to verify the signature
+    ("$gpg_bin" --list-keys $driftctl_key) &>/dev/null \
+      && has_key=1 \
+      || has_key=0
+    if [ $has_key -eq 1 ]; then
+      echo "Downloading SHA256 hashes signature file from $driftctl_url/v$version/driftctl_SHA256SUMS.gpg"
+      $(curlw -s -f -L -o "$dst_path/driftctl_SHA256SUMS.gpg" "$driftctl_url/v$version/driftctl_SHA256SUMS.gpg") || log_debug 'SHA256 hashes signature download failed'
 
-  if [[ -f "$dst_path/driftctl_SHA256SUMS.gpg" ]]; then
-    gpg_bin="$(command -v gpg 2>/dev/null)"
-    if [[ -n "$gpg_bin" ]]; then
-      ("$gpg_bin" --verify "$dst_path/driftctl_SHA256SUMS.gpg" "$dst_path/driftctl_SHA256SUMS") &>/dev/null \
-      && echo "PGP signature matched!" \
-      || log_error 'PGP signature rejected!'
-    else
-      echo 'No gpg tool available. Skipping signature validation'
+      if [[ -f "$dst_path/driftctl_SHA256SUMS.gpg" ]]; then
+        ("$gpg_bin" --verify "$dst_path/driftctl_SHA256SUMS.gpg" "$dst_path/driftctl_SHA256SUMS") &>/dev/null \
+          && echo "PGP signature matched!" && bin_is_verified=1 \
+          || log_error 'PGP signature rejected!'
+        $(rm "$dst_path/driftctl_SHA256SUMS.gpg")
+      else
+        echo 'No SHA256 hashes signature file available. Skipping signature validation'
+      fi
     fi
-    $(rm "$dst_path/driftctl_SHA256SUMS.gpg")
-  else
-    echo 'No SHA256 hashes signature file available. Skipping signature validation'
   fi
   $(rm "$dst_path/driftctl_SHA256SUMS")
+fi
+
+if [ $bin_is_verified -eq 0 ]; then
+  echo 'Unable to verify the authenticity of the binary'
 fi
 
 $(mv "$dst_path/driftctl_$os" "$dst_path/driftctl")
