@@ -16,7 +16,8 @@ setup() {
 0.2.3
 0.3.0
 0.3.1
-0.10.0"
+0.10.0
+0.38.2"
   }
   export -f dctlenv-list-remote;
 
@@ -187,9 +188,9 @@ OUT
 @test "dctlenv install [<version>]: prints a success message if it can install the latest version" {
   uname() { echo "Linux"; }; export -f uname;
   curlw() {
-    mkdir -p "$DCTLENV_TMPDIR/versions/0.10.0"
-    touch "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_linux_amd64"
-    (cd "$DCTLENV_TMPDIR/versions/0.10.0"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS")
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.38.2"
+    touch "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.38.2"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_SHA256SUMS")
     exit 0
   }; export -f curlw;
   gpg() { exit 0; }; export -f gpg;
@@ -198,16 +199,16 @@ OUT
 
   assert_success
   assert_output <<OUT
-Installing driftctl v0.10.0
-Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_linux_amd64
-Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS
+Installing driftctl v0.38.2
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.38.2/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.38.2/driftctl_SHA256SUMS
 SHA256 hash matched!
-Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS.gpg
+Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.38.2/driftctl_SHA256SUMS.gpg
 No SHA256 hashes signature file available. Skipping signature validation
 Unable to verify the authenticity of the binary
-Installation of driftctl v0.10.0 successful. To make this your default version, run 'dctlenv use 0.10.0'
+Installation of driftctl v0.38.2 successful. To make this your default version, run 'dctlenv use 0.38.2'
 OUT
-  refute [ -e "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS" ]
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_SHA256SUMS" ]
 }
 
 @test "dctlenv install [<version>]: prints a missing hashes signature file" {
@@ -290,6 +291,38 @@ SHA256 hash matched!
 Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS.gpg
 PGP signature matched!
 Installation of driftctl v0.10.0 successful. To make this your default version, run 'dctlenv use 0.10.0'
+OUT
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS" ]
+  refute [ -e "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS.gpg" ]
+}
+
+@test "dctlenv install [<version>]: prints a message if you did not import the right key based on the version of driftctl" {
+  uname() { echo "Linux"; }; export -f uname;
+  curlw() {
+    mkdir -p "$DCTLENV_TMPDIR/versions/0.38.2"
+    touch "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_linux_amd64"
+    (cd "$DCTLENV_TMPDIR/versions/0.38.2"; sha256sum * > "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_SHA256SUMS")
+    touch "$DCTLENV_TMPDIR/versions/0.38.2/driftctl_SHA256SUMS.gpg"
+    exit 0
+  }; export -f curlw;
+  gpg() {
+    if [ $1 == "--list-keys" ]; then
+      exit 1
+    fi
+    exit 0
+  }; export -f gpg;
+
+  run dctlenv install 0.38.2
+
+  assert_success
+  assert_output <<OUT
+Installing driftctl v0.38.2
+Downloading release tarball from https://github.com/snyk/driftctl/releases/download/v0.38.2/driftctl_linux_amd64
+Downloading SHA256 hashes file from https://github.com/snyk/driftctl/releases/download/v0.38.2/driftctl_SHA256SUMS
+SHA256 hash matched!
+To verify the authenticity of the binary, you need to import the key 65DDA08AA1605FC8211FC928FFB5FCAFD223D274
+Unable to verify the authenticity of the binary
+Installation of driftctl v0.38.2 successful. To make this your default version, run 'dctlenv use 0.38.2'
 OUT
   refute [ -e "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS" ]
   refute [ -e "$DCTLENV_TMPDIR/versions/0.10.0/driftctl_SHA256SUMS.gpg" ]

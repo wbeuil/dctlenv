@@ -79,7 +79,7 @@ You just need to import the public key of CloudSkiff and have the gpg binary alr
 
 ```console
 # Import key
-$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 0xACC776A79C824EBD
+$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 277666005A7F01D484F6376DACC776A79C824EBD
 gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
 gpg: Total number processed: 1
 gpg:               imported: 1
@@ -94,6 +94,16 @@ SHA256 hash matched!
 Downloading SHA256 hashes signature file from https://github.com/snyk/driftctl/releases/download/v0.10.0/driftctl_SHA256SUMS.gpg
 PGP signature matched!
 Installation of driftctl v0.10.0 successful. To make this your default version, run 'dctlenv use 0.10.0'
+```
+
+As of 05/01/23, a CircleCI breach has been discovered. You can read more about it [here](https://circleci.com/blog/january-4-2023-security-alert/). The driftctl team has been rotated its signing key and you will need to import the new one to verify the signature of all version starting from v0.38.2.
+
+```console
+# Import key
+$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 65DDA08AA1605FC8211FC928FFB5FCAFD223D274
+gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
 ```
 
 ### `dctlenv use [<version>]`

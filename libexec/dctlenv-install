@@ -60,7 +60,13 @@ if version_le $version "0.9.1"; then
   pgp=0
 fi
 
-driftctl_key="0xACC776A79C824EBD"
+# Since CircleCI breach on 05/01/23, driftctl changed its signing key
+# which means the PGP signature will be different for versions below 0.38.1
+driftctl_key="65DDA08AA1605FC8211FC928FFB5FCAFD223D274"
+if version_le $version "0.38.1"; then
+  driftctl_key="277666005A7F01D484F6376DACC776A79C824EBD"
+fi
+
 driftctl_url="https://github.com/snyk/driftctl/releases/download"
 
 echo "Installing driftctl v$version"
@@ -107,6 +113,8 @@ if [ $pgp -eq 1 ]; then
       else
         echo 'No SHA256 hashes signature file available. Skipping signature validation'
       fi
+    else
+      echo "To verify the authenticity of the binary, you need to import the key ${driftctl_key}"
     fi
   fi
   $(rm "$dst_path/driftctl_SHA256SUMS")
